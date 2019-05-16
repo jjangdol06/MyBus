@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import org.xmlpull.v1.XmlPullParser;
@@ -26,6 +27,8 @@ public class MainActivity extends AppCompatActivity {
     Button btSearch, btLSearch;
     TextView tv, tvID;
     String tag = "bus";
+    ListView listview;
+    ListViewAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
         btLSearch = (Button) findViewById(R.id.btnLSearch);
         tv = (TextView) findViewById(R.id.data);
         tvID = (TextView) findViewById(R.id.tvID);
+        listview=(ListView)findViewById(R.id.listview);
 
         btSearch.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -84,9 +88,10 @@ public class MainActivity extends AppCompatActivity {
                 factory.setNamespaceAware(true);
                 XmlPullParser xpp = factory.newPullParser();
 
+                adapter=new ListViewAdapter();
                 xpp.setInput(new StringReader(result));
                 int eventType = xpp.getEventType();
-                boolean bSet = false, bSetgpsX=false,  bSetgpsY=false;
+                boolean bSet = false, bSetgpsX=false,  bSetgpsY=false, bsetNo=false;
                 while (eventType != XmlPullParser.END_DOCUMENT) {
                     if (eventType == XmlPullParser.START_DOCUMENT) {
                         ;
@@ -98,6 +103,8 @@ public class MainActivity extends AppCompatActivity {
                             bSetgpsX = true;
                         if (tag_name.equals("gpsY"))  //다른 api 사용시 변경되는 부분
                             bSetgpsY = true;
+                        if (tag_name.equals("no"))  //다른 api 사용시 변경되는 부분
+                            bsetNo = true;
                     } else if (eventType == XmlPullParser.TEXT) {
                         if (bSet) {
                             //String content = xpp.getText();
@@ -117,11 +124,19 @@ public class MainActivity extends AppCompatActivity {
                             //tv.append(content + "\n");
                             bSetgpsY = false; //지나갔으니까 flag를 false로 하여 그 태그를 다시 찾을 수 있도록 해준다.
                         }
+                        if (bsetNo) {
+                            //String content = xpp.getText();
+                            //tv.append(xpp.getText());
+                            adapter.addItem(icon, gpsX, gpsY);
+                            //tv.append(content + "\n");
+                            bsetNo= false; //지나갔으니까 flag를 false로 하여 그 태그를 다시 찾을 수 있도록 해준다.
+                        }
                     } else if (eventType == XmlPullParser.END_TAG) {
                         ;
                     }
                     eventType = xpp.next();
-                }
+                } //while문 끝난 다음
+                listview.setAdapter(adapter);
             } catch (Exception e) {
                 tv.setText("\n" + e.getMessage());
             }

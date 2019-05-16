@@ -34,23 +34,9 @@
             android:text="위치검색"
             android:layout_weight="1"/>
     </LinearLayout>
-    <ScrollView
-        xmlns:android="http://schemas.android.com/apk/res/android"
+    <ListView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="9">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/data"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="16dp"/>
-
-        </LinearLayout>
-    </ScrollView>
+        android:layout_height="wrap_content"
+        android:id="@+id/listview">
+    </ListView>
 </LinearLayout>

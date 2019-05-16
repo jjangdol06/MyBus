@@ -106,10 +106,10 @@ public class MainActivity extends AppCompatActivity {
                             bSet = false; //지나갔으니까 flag를 false로 하여 그 태그를 다시 찾을 수 있도록 해준다.
                         }
                         if (bSetgpsX) {
-                                //String content = xpp.getText();
-                                tv.append(xpp.getText());
-                                //tv.append(content + "\n");
-                                bSetgpsX = false; //지나갔으니까 flag를 false로 하여 그 태그를 다시 찾을 수 있도록 해준다.
+                            //String content = xpp.getText();
+                            tv.append(xpp.getText());
+                            //tv.append(content + "\n");
+                            bSetgpsX = false; //지나갔으니까 flag를 false로 하여 그 태그를 다시 찾을 수 있도록 해준다.
                         }
                         if (bSetgpsY) {
                             //String content = xpp.getText();
